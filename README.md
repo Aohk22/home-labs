@@ -1,1 +1,1 @@
-# My lab diagrams
+# My labs
