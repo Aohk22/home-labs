@@ -49,11 +49,11 @@ _List can be changed as I go through_
 Complete the diagram  
 - ~~Figure out where to place the IDS, firewall...~~  
 - ~~Figure out how to connect the machines on VB~~   
-- Document VM setup  
+- Document VM setup (on going) 
 
 Setup all devices on VirtualBox  
 
-- Setup PC1 ModSecurity, OSSEC.
+- Setup PC1 ModSecurity, OSSEC. (~~basic~~, server)
 - Setup PC2 Security Onion.
 - Setup PC3 Snort (IPS), OPNSense, Copying traffic to Security Onion.
 - Setup Kali Linux.
