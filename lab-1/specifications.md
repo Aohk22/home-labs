@@ -5,8 +5,7 @@ _All config is subject to change_
 IPS: Snort  
 HIDS: OSSEC  
 Firewall: OPNSense  
-Logging, SIEM: Security Onion  
-
+Logging: Security Onion  
 Web Application Firewall: ModSecurity  
 
 # Virtual machine specifications
@@ -25,7 +24,8 @@ This machine will run web servers for WAF testing.
 
 IP: 192.168.0.3  
 OS: Security Onion  
-Use this for threat hunting/alerts.  
+~~Use this for threat hunting/alerts.~~  
+Alerts, IDS requires standalone architecture which has too much requirement for me.   
 
 ## PC3
 
@@ -34,35 +34,36 @@ OS: Arch Linux
 IPS: Snort  
 Firewall: OPNSense  
 This will acts as router with 2 NICs, the router will copy traffic into PC2 (Sec. Onion) for logging.  
+If this turns out too hard to do, I'll just use vbox promiscuous mode.
 
 ## PC4
 
 IP: 192.168.1.2  
 OS: Kali Linux  
-Used for pentesting.  
+Used for network testing.
   
 # To dos
 
 _List can be changed as I go through_
 
 ~~List going-to-use stuff~~  
-Complete the diagram  
+~~Complete the diagram~~  
 - ~~Figure out where to place the IDS, firewall...~~  
 - ~~Figure out how to connect the machines on VB~~   
-- Document VM setup (on going) 
 
 Setup all devices on VirtualBox  
 
-- Setup PC1 ModSecurity, OSSEC. (~~basic~~, server)
-- Setup PC2 Security Onion.
-- Setup PC3 Snort (IPS), OPNSense, Copying traffic to Security Onion.
+- Setup PC1 ModSecurity, OSSEC. (~~basic~~, HIDS, server)
+- Setup PC2 Security Onion. (**on going**)
+- Setup PC3 Snort (IPS), OPNSense, Copying traffic to Security Onion. (~~basic~~, conf. interface,...)
 - Setup Kali Linux.
 
 # VirtualBox setup documentation
 
-## PC1
+## PC1 (192.168.0.2)
 
 **Installed using**: archlinux-2025.02.01-x86_64.iso
+**Installation guide**: https://wiki.archlinux.org/title/Installation_guide
 
 **Boot**: EFI mode  
 **Partition**:
@@ -77,7 +78,7 @@ Setup all devices on VirtualBox
 **Installed packages**:  
 The base packages, intel-ucode, vim, man-db, man-pages, firefox.   
 **Bootloader**: systemd-boot. (default configuration)  
-**Network manager**: 
+**Network manager**:  
 systemd-network,  
 IP: 192.168.0.2,  
 Full `/etc/systemd/network/20-wired.network`:  
@@ -92,3 +93,19 @@ Gateway=192.168.0.1
 ```
 
 Adapter connected to *inner* VBox's internal network
+
+## PC2 (192.168.0.3)
+
+**Installed using**: securityonion-2.4.111-20241217.iso  
+**Installation guide**: https://docs.securityonion.net/en/2.4/installation.html   
+Do check the [hardware specs](https://docs.securityonion.net/en/2.4/hardware.html)
+
+Architecture: [Import](https://docs.securityonion.net/en/2.4/architecture.html#import)  
+
+## PC3 (192.168.0.1, 192.168.1.1)
+
+Partition and packages are the same as PC2.  
+**Network manager**:  
+systemd-networkd,  
+IP: 192.168.1.1, 192.168.0.1;  
+Network files are configured just like PC1.
