@@ -26,6 +26,7 @@ IP: 192.168.0.3
 OS: Security Onion  
 ~~Use this for threat hunting/alerts.~~  
 Alerts, IDS requires standalone architecture which has too much requirement for me.   
+For simplicity, I added another NIC for connecting to my PC to get to the SOC (security onion console).  
 
 ## PC3
 
@@ -46,17 +47,27 @@ Used for network testing.
 
 _List can be changed as I go through_
 
-~~List going-to-use stuff~~  
-~~Complete the diagram~~  
+## ~~List going-to-use stuff~~  
+## ~~Complete the diagram~~  
+
 - ~~Figure out where to place the IDS, firewall...~~  
 - ~~Figure out how to connect the machines on VB~~   
 
-Setup all devices on VirtualBox  
+## Setup all devices on VirtualBox  
 
-- Setup PC1 ModSecurity, OSSEC. (~~basic~~, HIDS, server)
-- Setup PC2 Security Onion. (**on going**)
-- Setup PC3 Snort (IPS), OPNSense, Copying traffic to Security Onion. (~~basic~~, conf. interface,...)
-- Setup Kali Linux.
+### Setup PC1 ModSecurity, OSSEC. (~~basic~~, HIDS, HTTP server)
+
+### Setup PC2 Security Onion. (~~installation~~, ~~internal NIC~~)
+
+### Setup PC3 Snort (IPS), OPNSense, Copying traffic to Security Onion.
+
+- ~~OS setup~~
+- ~~Basic interface configuration~~ (tested pinging between machines)
+- Packet forwarding
+- Firewall
+- Snort IPS mode
+
+### Setup Kali Linux. (easy enough, I'll do this last)
 
 # VirtualBox setup documentation
 
@@ -88,7 +99,7 @@ Full `/etc/systemd/network/20-wired.network`:
 Name=enp0s3
 
 [Network]
-Address=192.168.0.2
+Address=192.168.0.2/24
 Gateway=192.168.0.1
 ```
 
@@ -98,9 +109,10 @@ Adapter connected to *inner* VBox's internal network
 
 **Installed using**: securityonion-2.4.111-20241217.iso  
 **Installation guide**: https://docs.securityonion.net/en/2.4/installation.html   
-Do check the [hardware specs](https://docs.securityonion.net/en/2.4/hardware.html)
+Do check the [hardware specs.](https://docs.securityonion.net/en/2.4/hardware.html)
 
 Architecture: [Import](https://docs.securityonion.net/en/2.4/architecture.html#import)  
+*Also if you are also installing in import mode, salt-master is not needed so ignore the error.*  
 
 ## PC3 (192.168.0.1, 192.168.1.1)
 
@@ -108,4 +120,4 @@ Partition and packages are the same as PC2.
 **Network manager**:  
 systemd-networkd,  
 IP: 192.168.1.1, 192.168.0.1;  
-Network files are configured just like PC1.
+Network files are configured just like PC1, don't need to add gateway.
