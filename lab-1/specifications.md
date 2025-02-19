@@ -4,7 +4,7 @@ _All config is subject to change_
 
 IPS: Snort  
 HIDS: OSSEC  
-Firewall: OPNSense  
+Firewall: OPNSense (just for experience)  
 Logging: Security Onion  
 Web Application Firewall: ModSecurity  
 
