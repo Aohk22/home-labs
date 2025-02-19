@@ -33,7 +33,7 @@ For simplicity, I added another NIC for connecting to my PC to get to the SOC (s
 IP: 192.168.1.1, 192.168.0.1  
 OS: Arch Linux  
 IPS: Snort  
-Firewall: OPNSense  
+Firewall: OPNSense (just for experience)  
 This will acts as router with 2 NICs, the router will copy traffic into PC2 (Sec. Onion) for logging.  
 If this turns out too hard to do, I'll just use vbox promiscuous mode.
 
@@ -63,11 +63,12 @@ _List can be changed as I go through_
 
 - ~~OS setup~~
 - ~~Basic interface configuration~~ (tested pinging between machines)
-- Packet forwarding
+- ~~Packet forwarding~~
+- Packet cloning into PC2 (Security Onion) for logging
 - Firewall
 - Snort IPS mode
 
-### Setup Kali Linux. (easy enough, I'll do this last)
+### Setup Kali Linux. (~~installation~~)
 
 # VirtualBox setup documentation
 
@@ -107,7 +108,7 @@ Adapter connected to *inner* VBox's internal network
 
 ## PC2 (192.168.0.3)
 
-**Installed using**: securityonion-2.4.111-20241217.iso  
+**Installed using**: `securityonion-2.4.111-20241217.iso`  
 **Installation guide**: https://docs.securityonion.net/en/2.4/installation.html   
 Do check the [hardware specs.](https://docs.securityonion.net/en/2.4/hardware.html)
 
@@ -121,3 +122,17 @@ Partition and packages are the same as PC2.
 systemd-networkd,  
 IP: 192.168.1.1, 192.168.0.1;  
 Network files are configured just like PC1, don't need to add gateway.
+
+**Packet forwarding:** I used iptables using [this](https://wiki.archlinux.org/title/Router#Connection_sharing) guide.  
+**Firewall (OPNSense):**  
+Follow this [guide](https://ipv6.rs/tutorial/Arch_Linux/OPNsense/).
+
+## PC4 (192.168.1.2)
+
+Installed using prebuilt image (look on their official website).
+File name: `kali-linux-2024.4-virtualbox-amd64.gz`
+
+# Screenshots
+
+Demonstrate pinging between devices routed by PC3 (Arch router)
+![Pasted image 20250219202905.png](img/Pasted%20image%2020250219202905.png)
