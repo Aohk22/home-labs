@@ -46,18 +46,18 @@ Used for network testing.
 
 ## Setup all devices on VirtualBox  
 
-### Setup PC1 ModSecurity, OSSEC. (basic, HIDS, HTTP server)
+### Setup PC1 ModSecurity, OSSEC.
 
 ### Setup PC2 Security Onion.
 
-### Setup PC3 Snort (IPS), OPNSense, Copying traffic to Security Onion.
+### Setup PC3 Snort (IPS mode), OPNSense.
 
 - OS setup
 - Basic interface configuration (tested pinging between machines)
+- Packet forwarding
 
 After basic installation you are ready to capture pcaps on PC1 - using whatever tool you like and import it to Security Onion for analysis.
 
-- Packet forwarding
 - Firewall
 - Snort IPS mode
 
@@ -116,17 +116,19 @@ address=192.168.0.3/24
 gateway=192.168.0.1
 method=manual
 ```  
-Bridge adapter interface should work out of the box.
+Bridged adapter interface should work out of the box.
+
 ## PC3 (192.168.0.1, 192.168.1.1)
 
 Partition and packages are the same as PC2.  
 
 **Network manager**:  
 systemd-networkd,  
-IP: 192.168.1.1, 192.168.0.1;  
+IP: 192.168.1.1, 192.168.0.1.  
 *For installing packages, remember to [configure DNS](https://man.archlinux.org/man/resolv.conf.5.en) for extra bridge interface, interface listed above is only for internal lab environment.*
 
-**Packet forwarding:** I used iptables using this [guide](https://wiki.archlinux.org/title/Router#Connection_sharing).  
+**Packet forwarding:**  
+I used iptables using this [guide](https://wiki.archlinux.org/title/Router#Connection_sharing).  
 
 **Firewall (OPNSense):**  
 Follow this [guide](https://ipv6.rs/tutorial/Arch_Linux/OPNsense/).
